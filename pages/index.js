@@ -26,7 +26,7 @@ export default function Bem_Vindo() {
                     source={require("../assets/background/Back.png")}
                     style={styles.back}/>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('entrada')}
+                    onPress={() => navigation.navigate('bemVindo')}
                     style={styles.button}>
                     <Text style={styles.buttonText}>
                         Vamos as compras!

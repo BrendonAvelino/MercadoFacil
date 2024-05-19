@@ -36,37 +36,61 @@ export default function Acesso() {
 
 
         <View style={styles.buttonsDeBaixo}>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button1}>
+          <Animatable.View style={styles.buttonContainer}
+            delay={400}
+            animation="flipInY">
+
+
+            <TouchableOpacity
+              style={styles.button1}
+              onPress={() => navigation.navigate('noProduto')}>
               <Image
                 source={require("../assets/icone_produtos.png")}
                 style={styles.buttonIcon}
               />
-              <Text style={styles.buttonText}>
+              <Text style={styles.buttonText}
+              >
                 Produtos
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button2}>
+
+
+
+            <TouchableOpacity
+              style={styles.button2}
+              onPress={() => navigation.navigate('noLista')}>
               <Image
                 source={require("../assets/icone_lista.png")}
                 style={styles.buttonIcon}
               />
-              <Text style={[styles.buttonText, styles.buttonTextLineBreak]}>
+              <Text style={[styles.buttonText, styles.buttonTextLineBreak]}
+              >
                 Lista de{"\n"}Compras
               </Text>
             </TouchableOpacity>
-          </View>
+          </Animatable.View>
 
-          <TouchableOpacity style={[styles.button3, { marginBottom: 50 }]}>
-            <Image
-              source={require("../assets/icone_historico.png")}
-              style={styles.buttonIcon}
-            />
-            <Text style={[styles.buttonText, {color: 'white'}]}>
-              Histórico de Compras
-            </Text>
-          </TouchableOpacity>
+
+
+
+          <Animatable.View
+            delay={400}
+            animation="flipInY">
+            <TouchableOpacity
+
+              style={[styles.button3, { marginBottom: 50 }]}
+              onPress={() => navigation.navigate('noHistorico')}>
+              <Image
+                source={require("../assets/icone_historico.png")}
+                style={styles.buttonIcon}
+              />
+              <Text style={[styles.buttonText, { color: 'white' }]}
+              >
+                Histórico de Compras
+              </Text>
+            </TouchableOpacity>
+          </Animatable.View>
         </View>
       </View>
     </ScrollView>
@@ -113,7 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    
+
   },
 
   buttonIcon: {

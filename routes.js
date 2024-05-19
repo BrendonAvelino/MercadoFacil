@@ -1,13 +1,22 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import Bem_Vindo from './pages/index';
-import Acesso from './pages/entrada';
-import Cadastre_se from './pages/cadastro';
-import AfterLoginPage from './pages/posLogin';
+import Acesso from './pages/bemVindo';
+import noProduto from './pages/noProduto';
+import noHistorico from './pages/noHistorico';
+import noLista from './pages/noLista'
+import historicoAcesso from './pages/noHistorico';
+import listaAcesso from './pages/noLista';
 
 const Stack = createStackNavigator();
 
 export default function Routes() {
     return (
+
+
+
+
+
+
         <Stack.Navigator>
 
             <Stack.Screen
@@ -18,21 +27,23 @@ export default function Routes() {
 
             <Stack.Screen
                 options={{ headerShown: false }}
-                name="entrada"
+                name="bemVindo"
                 component={Acesso}
             />
-
+            
             <Stack.Screen
-                options={{ headerShown: false }}
-                name="cadastro"
-                component={Cadastre_se}
-            />
-
+                name="noProduto"
+                component={noProduto}
+                options={{ headerShown: false }} />
             <Stack.Screen
-                options={{ headerShown: false }}
-                name="posLogin"
-                component={AfterLoginPage}
-            />
+                name="noHistorico"
+                component={noHistorico}
+                options={{ headerShown: false }} />
+            <Stack.Screen
+                name="noLista"
+                component={noLista}
+                options={{ headerShown: false }} />
+
         </Stack.Navigator>
     )
 } 
