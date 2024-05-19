@@ -12,16 +12,16 @@ export default function Bem_Vindo() {
         <View style={styles.container} >
             <View style={styles.containerLogo}>
                 <Animatable.Image
-                    delay={1000}
+                    delay={900}
                     animation="flipInY"
                     source={require("../assets/logo_mercado.png")}
                     style={styles.logo}
                     resizeMode="contain"
                 />
             </View>
-            <Animatable.View delay={600} animation='fadeInUp' style={styles.containerForm}>
+            <Animatable.View delay={550} animation='fadeInUp' style={styles.containerForm}>
                 <Image
-                    delay={1000}
+                    delay={900}
                     animation="flipInY"
                     source={require("../assets/background/Back.png")}
                     style={styles.back}/>
@@ -32,7 +32,7 @@ export default function Bem_Vindo() {
                         Vamos as compras!
                     </Text>
                     <Image
-                    delay={1000}
+                    delay={900}
                     animation="flipInY"
                     source={require("../assets/icone_arrow.png")}
                     style={styles.icone}/>

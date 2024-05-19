@@ -23,7 +23,7 @@ export default function noLista() {
                     </Animatable.View>
                     <View style={styles.containerForm}>
                         <TouchableOpacity style={styles.button}
-                        onPress={() => navigation.navigate('noHistorico')}>
+                        onPress={() => navigation.navigate('criarLista')}>
                             <Text style={styles.buttonText}>
                                 CRIAR LISTA
                             </Text>

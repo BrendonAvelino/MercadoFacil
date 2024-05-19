@@ -26,7 +26,7 @@ export default function Acesso() {
         </Animatable.Text>
         <View style={styles.containerLogo}>
           <Animatable.Image
-            delay={400}
+            delay={300}
             animation="flipInY"
             source={require("../assets/logo_mercado_semtexto.png")}
             style={styles.logo}
@@ -37,7 +37,7 @@ export default function Acesso() {
 
         <View style={styles.buttonsDeBaixo}>
           <Animatable.View style={styles.buttonContainer}
-            delay={400}
+            delay={300}
             animation="flipInY">
 
 
@@ -75,7 +75,7 @@ export default function Acesso() {
 
 
           <Animatable.View
-            delay={400}
+            delay={300}
             animation="flipInY">
             <TouchableOpacity
 
