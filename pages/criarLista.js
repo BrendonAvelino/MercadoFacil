@@ -1,12 +1,34 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function criarLista() {
     const navigation = useNavigation();
 
     const [tituloLista, setTituloLista] = useState('');
     const [listaCompras, setListaCompras] = useState('');
+
+    const saveList = async (title, items) => {
+        try {
+            const currentDate = new Date();
+            const dateString = currentDate.toLocaleDateString();
+            const timeString = currentDate.toLocaleTimeString();
+            const newList = { title, items, date: dateString, time: timeString };
+            const lists = await AsyncStorage.getItem('savedLists');
+            const parsedLists = lists ? JSON.parse(lists) : [];
+            parsedLists.push(newList);
+            await AsyncStorage.setItem('savedLists', JSON.stringify(parsedLists));
+            // Limpar os campos de entrada após salvar a lista
+            setTituloLista('');
+            setListaCompras('');
+            // Atualizar a lista de listas salvas
+            navigation.navigate('noLista');
+        } catch (error) {
+            console.error('Erro ao salvar lista:', error);
+        }
+    };
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -19,9 +41,17 @@ export default function criarLista() {
                                 style={styles.imageVoltar}
                             />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}>
+
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => {
+                                saveList(tituloLista, listaCompras);
+                                // navigation.goBack(); // Não é necessário mais, pois estamos navegando para 'noLista' depois de salvar
+                            }}
+                        >
                             <Text style={styles.buttonText}>Salvar Lista</Text>
                         </TouchableOpacity>
+
                     </View>
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Título:</Text>
@@ -46,6 +76,7 @@ export default function criarLista() {
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
+
 }
 
 const styles = StyleSheet.create({
@@ -84,6 +115,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 10,
-        padding: 10
+        padding: 10,
+
     }
 });
