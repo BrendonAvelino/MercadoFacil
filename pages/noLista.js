@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView, TouchableWithoutFeedback, Image } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Animatable from 'react-native-animatable';
 
 export default function NoLista() {
     const navigation = useNavigation();
@@ -14,7 +14,7 @@ export default function NoLista() {
             if (lists) {
                 setSavedLists(JSON.parse(lists));
             } else {
-                setSavedLists([]); // Define como uma lista vazia se não houver listas salvas
+                setSavedLists([]);
             }
         } catch (error) {
             console.error('Erro ao recuperar listas:', error);
@@ -23,13 +23,13 @@ export default function NoLista() {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            getSavedLists(); // Atualiza a lista sempre que a tela ganha foco
+            getSavedLists();
         });
         return unsubscribe;
     }, [navigation]);
 
     const viewList = (list) => {
-        // Implemente a lógica para exibir a lista conforme necessário
+        navigation.navigate('EditarLista', { list }); // Navega para a página de edição, passando a lista como parâmetro
     };
 
     const deleteList = async (index) => {
@@ -42,12 +42,6 @@ export default function NoLista() {
             const parsedHistoryLists = historyLists ? JSON.parse(historyLists) : [];
             parsedHistoryLists.push(deletedList);
             await AsyncStorage.setItem('historyLists', JSON.stringify(parsedHistoryLists));
-
-            // Verificar e remover listas antigas se o histórico ultrapassar 5
-            if (parsedHistoryLists.length > 5) {
-                parsedHistoryLists.splice(0, parsedHistoryLists.length - 5);
-                await AsyncStorage.setItem('historyLists', JSON.stringify(parsedHistoryLists));
-            }
 
             await AsyncStorage.setItem('savedLists', JSON.stringify(updatedLists));
             setSavedLists(updatedLists);

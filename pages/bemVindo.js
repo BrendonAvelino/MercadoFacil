@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   buttonText: {
+    marginLeft: 5,
     color: '#3D4751',
     fontWeight: 'bold',
     fontSize: 16,
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
     textAlign: 'center', // Alinhamento do texto
   },
   buttonTextLineBreak: {
+    
     lineHeight: 20, // Espaçamento entre as linhas
   },
   container: {
@@ -187,7 +189,7 @@ const styles = StyleSheet.create({
   titulo: {
     position: 'relative',
     top: -180, // Movendo para cima
-    left: 90,
+    left: 100,
     zIndex: 2,
     display: 'flex',
     justifyContent: 'center',

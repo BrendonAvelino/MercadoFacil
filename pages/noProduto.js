@@ -1,14 +1,19 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, Alert, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import ProductModal from '../components/modal';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
-import { useNavigation } from '@react-navigation/native';
 
 export default function noProduto() {
-
+    const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
 
-    return (
+    const handleAddProduct = (productName) => {
+        Alert.alert('Produto Adicionado', `Produto: ${productName}`);
+        // Aqui você pode adicionar lógica para salvar o produto na lista
+    };
 
+    return (
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <View style={styles.container}>
@@ -34,8 +39,7 @@ export default function noProduto() {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.returnButton}
-                    >
+                    <TouchableOpacity style={styles.returnButton} onPress={() => setModalVisible(true)}>
                         <Text style={styles.returnButtonText}>Adicionar Produto</Text>
                         <Image
                             source={require("../assets/icone_adicionar.png")}
@@ -49,11 +53,17 @@ export default function noProduto() {
                         delay={1000}
                         animation="flipInY"
                         source={require("../assets/background/Back3.png")}
-                        style={styles.back} />
+                        style={styles.back}
+                    />
+                    <ProductModal
+                        visible={modalVisible}
+                        onClose={() => setModalVisible(false)}
+                        onAdd={handleAddProduct}
+                    />
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -138,4 +148,4 @@ const styles = StyleSheet.create({
         color: '#3D4751',
         fontWeight: 'bold'
     },
-})
+});

@@ -5,6 +5,8 @@ import noProduto from './pages/noProduto';
 import noHistorico from './pages/noHistorico';
 import noLista from './pages/noLista'
 import criarLista from './pages/criarLista';
+import editarLista from './pages/EditarLista';
+import historicoLista from './pages/historicoLista';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +48,16 @@ export default function Routes() {
             <Stack.Screen
                 name="criarLista"
                 component={criarLista}
+                options={{ headerShown: false }} />
+
+            <Stack.Screen
+                name="EditarLista"
+                component={editarLista}
+                options={{ headerShown: false }} />
+
+            <Stack.Screen
+                name="historicoLista"
+                component={historicoLista}
                 options={{ headerShown: false }} />
 
         </Stack.Navigator>

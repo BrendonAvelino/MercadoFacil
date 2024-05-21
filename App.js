@@ -8,13 +8,6 @@ import { useFonts } from 'expo-font';
 
 export default function App() {
 
-  const [loaded] = useFonts({
-    'Oswald': require('./assets/fonts/Oswald-VariableFont_wght.ttf'),
-  });
-
-  if (!loaded) {
-    return null;
-  }
 
   return (
     <NavigationContainer>

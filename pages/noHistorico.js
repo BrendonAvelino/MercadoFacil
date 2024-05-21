@@ -8,6 +8,30 @@ export default function noHistorico() {
     const navigation = useNavigation();
     const [historyLists, setHistoryLists] = useState([]);
 
+
+    const deleteList = async (index) => {
+        try {
+            const updatedLists = [...savedLists];
+            const deletedList = updatedLists.splice(index, 1)[0];
+            
+            // Adicionando a lista excluída ao histórico
+            const historyLists = await AsyncStorage.getItem('historyLists');
+            let parsedHistoryLists = historyLists ? JSON.parse(historyLists) : [];
+            parsedHistoryLists.push(deletedList);
+            
+            // Verificar e remover listas antigas se o histórico ultrapassar 5
+            if (parsedHistoryLists.length > 5) {
+                parsedHistoryLists.splice(-1, 1); // Remove o último elemento (o mais antigo)
+            }
+    
+            await AsyncStorage.setItem('historyLists', JSON.stringify(parsedHistoryLists));
+            setSavedLists(updatedLists);
+        } catch (error) {
+            console.error('Erro ao excluir lista:', error);
+        }
+    };
+
+
     useEffect(() => {
         const getHistoryLists = async () => {
             try {
@@ -24,7 +48,7 @@ export default function noHistorico() {
 
     const viewList = (list) => {
         // Implemente a lógica para exibir a lista conforme necessário
-        console.log('Visualizar lista:', list);
+        navigation.navigate('historicoLista', { list });
     };
     return (
         <View style={styles.container}>

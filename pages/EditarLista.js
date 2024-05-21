@@ -1,36 +1,45 @@
+// editarLista.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from 'react-native-uuid'; // Importe o pacote uuid
 
-export default function criarLista() {
+export default function EditarLista() {
     const navigation = useNavigation();
+    const route = useRoute();
+    const { list } = route.params;
 
-    const [tituloLista, setTituloLista] = useState('');
-    const [listaCompras, setListaCompras] = useState('');
+    const [tituloLista, setTituloLista] = useState(list.title);
+    const [listaCompras, setListaCompras] = useState(list.items);
 
-    const saveList = async (title, items) => {
+    const saveList = async () => {
         try {
             const currentDate = new Date();
             const dateString = currentDate.toLocaleDateString();
             const timeString = currentDate.toLocaleTimeString();
-            const id = uuid.v4(); // Gere um ID único
-            const newList = { id, title, items, date: dateString, time: timeString }; // Adicione o ID à nova lista
-            const lists = await AsyncStorage.getItem('savedLists');
-            const parsedLists = lists ? JSON.parse(lists) : [];
-            parsedLists.push(newList);
-            await AsyncStorage.setItem('savedLists', JSON.stringify(parsedLists));
-            // Limpar os campos de entrada após salvar a lista
-            setTituloLista('');
-            setListaCompras('');
-            // Atualizar a lista de listas salvas
+            const updatedList = { ...list, title: tituloLista, items: listaCompras, date: dateString, time: timeString };
+    
+            // Recupere todas as listas salvas
+            const savedLists = await AsyncStorage.getItem('savedLists');
+            let parsedSavedLists = savedLists ? JSON.parse(savedLists) : [];
+    
+            // Encontre a lista específica na qual você está trabalhando
+            const index = parsedSavedLists.findIndex(item => item.id === list.id);
+    
+            // Atualize apenas a lista específica
+            if (index !== -1) {
+                parsedSavedLists[index] = updatedList;
+            }
+    
+            // Salve as listas atualizadas no AsyncStorage
+            await AsyncStorage.setItem('savedLists', JSON.stringify(parsedSavedLists));
+    
+            // Navegue de volta para a página noLista
             navigation.navigate('noLista');
         } catch (error) {
             console.error('Erro ao salvar lista:', error);
         }
     };
-
     return (
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -42,17 +51,12 @@ export default function criarLista() {
                                 style={styles.imageVoltar}
                             />
                         </TouchableOpacity>
-
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => {
-                                saveList(tituloLista, listaCompras);
-                                // navigation.goBack(); // Não é necessário mais, pois estamos navegando para 'noLista' depois de salvar
-                            }}
+                            onPress={saveList}
                         >
                             <Text style={styles.buttonText}>Salvar Lista</Text>
                         </TouchableOpacity>
-
                     </View>
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Título:</Text>
@@ -77,9 +81,7 @@ export default function criarLista() {
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
     );
-
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -118,6 +120,5 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         borderRadius: 10,
         padding: 10,
-
     }
 });
