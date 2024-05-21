@@ -1,28 +1,48 @@
-import React, { useState } from 'react';
-import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, TouchableWithoutFeedback,  Image, Keyboard } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, Image, Keyboard } from 'react-native';
 
-const ProductModal = ({ visible, onClose, onAdd }) => {
+const ProductModal = ({ visible, onClose, onAdd, editProduct, onEdit }) => {
+
     const [productName, setProductName] = useState('');
     const [productValue, setProductValue] = useState('');
-    const [quantity, setQuantity] = useState(1);
+    const [editIndex, setEditIndex] = useState(-1);
+    const [quantity, setQuantity] = useState('1');
 
-    // const handleAdd = () => {
-    //     onAdd(productName, quantity); // Atualize essa linha se a função onAdd espera mais de um parâmetro
-    //     setProductName('');
-    //     setProductValue('');
-    //     setQuantity(1); // Reiniciar a quantidade após adicionar
-    //     onClose();
-    // };
-    
+    const handleAdd = () => {
+        if (productName.trim() === '' || productValue.trim() === '') {
+            alert('Por favor, preencha todos os campos!');
+            return;
+        }
+        if (editIndex !== -1) {
+            onEdit(editIndex, productName, productValue, quantity);
+        } else {
+            onAdd(productName, productValue, quantity);
+        }
+        setProductName('');
+        setProductValue('');
+        setQuantity('1');
+        setEditIndex(-1);
+        onClose();
+    };
+
+    useEffect(() => {
+        if (editProduct && editProduct.index !== undefined) {
+            setEditIndex(editProduct.index);
+            setProductName(editProduct.name);
+            setProductValue(String(editProduct.value));
+            setQuantity(String(editProduct.quantity));
+        }
+    }, [editProduct]);
 
     const handleIncrement = () => {
-        setQuantity(prevQuantity => prevQuantity + 1);
+        setQuantity((prevQuantity) => String(parseInt(prevQuantity) + 1));
     };
-    
+
     const handleDecrement = () => {
-        setQuantity(prevQuantity => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+        if (parseInt(quantity) > 1) {
+            setQuantity((prevQuantity) => String(parseInt(prevQuantity) - 1));
+        }
     };
-    
 
     return (
         <Modal
@@ -35,11 +55,9 @@ const ProductModal = ({ visible, onClose, onAdd }) => {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-                            
-                                <Image
+                            <Image
                                 source={require("../assets/icone_fechar.png")}
-                                />
-                            
+                            />
                         </TouchableOpacity>
                         <Text style={styles.modalText}>Adicionar Produto</Text>
                         <TextInput
@@ -58,21 +76,21 @@ const ProductModal = ({ visible, onClose, onAdd }) => {
                         <Text style={styles.quantityText}>Quantidade:</Text>
                         <View style={styles.quantityContainer}>
                             <TouchableOpacity style={styles.quantityButton} onPress={handleDecrement}>
-                            <Image 
+                                <Image
                                     style={styles.quantityButtonText}
                                     source={require("../assets/icone_remover.png")}
                                 />
                             </TouchableOpacity>
                             <Text style={styles.quantityNumber}>{quantity}</Text>
                             <TouchableOpacity style={styles.quantityButton} onPress={handleIncrement}>
-                                <Image 
+                                <Image
                                     style={styles.quantityButtonText}
                                     source={require("../assets/icone_adicionar.png")}
                                 />
                             </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={styles.addButton} >
-                            <Text style={styles.addButtonText}>Adicionar Lista</Text>
+                        <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
+                            <Text style={styles.addButtonText}>Adicionar Produto</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -104,10 +122,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 10,
         right: 10,
-    },
-    closeButtonText: {
-        fontSize: 18,
-        color: '#000',
     },
     modalText: {
         fontSize: 18,

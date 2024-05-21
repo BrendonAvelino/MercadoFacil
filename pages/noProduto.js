@@ -1,23 +1,53 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import ProductModal from '../components/modal';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import * as Animatable from 'react-native-animatable';
+import { useNavigation } from '@react-navigation/native';
 
-export default function noProduto() {
+export default function NoProduto() {
     const [modalVisible, setModalVisible] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [editProduct, setEditProduct] = useState(null);
+
     const navigation = useNavigation();
 
-    const handleAddProduct = (productName) => {
-        Alert.alert('Produto Adicionado', `Produto: ${productName}`);
-        // Aqui você pode adicionar lógica para salvar o produto na lista
+    const handleAddProduct = (productName, productValue, quantity) => {
+        const newProduct = {
+            name: productName,
+            value: parseFloat(productValue),
+            quantity: parseInt(quantity),
+        };
+        setProducts([...products, newProduct]);
+        setModalVisible(false);
+    };
+
+    const handleDeleteProduct = (index) => {
+        const updatedProducts = [...products];
+        updatedProducts.splice(index, 1);
+        setProducts(updatedProducts);
+    };
+
+    const handleEditProduct = (index) => {
+        const productToEdit = products[index];
+        setEditProduct({ ...productToEdit, index });
+        setModalVisible(true);
+    };
+
+    const handleEditSubmit = (index, name, value, quantity) => {
+        const updatedProducts = [...products];
+        updatedProducts[index] = { name, value: parseFloat(value), quantity: parseInt(quantity) };
+        setProducts(updatedProducts);
+        setEditProduct(null);
+    };
+
+    const calculateTotal = () => {
+        return products.reduce((total, product) => total + (product.value * product.quantity), 0);
     };
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <View style={styles.container}>
-                    <Animatable.View animation="fadeInLeft" delay={100} style={styles.containerHeader}>
+                    <View style={styles.containerHeader}>
                         <TouchableOpacity onPress={() => navigation.navigate('bemVindo')}>
                             <Image
                                 source={require("../assets/icone_voltar.png")}
@@ -25,15 +55,14 @@ export default function noProduto() {
                             />
                         </TouchableOpacity>
                         <Text style={styles.message}>Produtos</Text>
-                    </Animatable.View>
+                    </View>
                     <View style={styles.containerForm}>
                         <View style={styles.button}>
                             <Text style={styles.buttonText}>
-                                TOTAL: R$0,00
+                                TOTAL: R${calculateTotal().toFixed(2)}
                             </Text>
                         </View>
-                        <TouchableOpacity style={styles.button}
-                            onPress={() => navigation.navigate('noLista')}>
+                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('noLista')}>
                             <Text style={styles.buttonText}>
                                 LISTA DE COMPRAS
                             </Text>
@@ -46,19 +75,40 @@ export default function noProduto() {
                             style={styles.imageButton}
                         />
                     </TouchableOpacity>
-                    <View style={styles.noProductsContainer}>
-                        <Text style={styles.noProductsText}>Não há produtos ainda...</Text>
-                    </View>
-                    <Image
-                        delay={1000}
-                        animation="flipInY"
-                        source={require("../assets/background/Back3.png")}
-                        style={styles.back}
-                    />
+                    <ScrollView style={{ flex: 1, marginBottom: 20, marginTop: 12, backgroundColor: '#E4ECB7', marginLeft: 18, marginRight: 18, borderRadius: 10 }}>
+                        {products.map((product, index) => (
+                            <View key={index} style={styles.productContainer}>
+                                <View style={styles.productInfo}>
+                                    <Text style={styles.productName}>{product.name}</Text>
+
+                                    <Text style={styles.productPrice}>R${product.value.toFixed(2)}</Text>
+                                    <Text style={styles.quantityText}>Quantidade: {product.quantity}</Text>
+
+                                    <TouchableOpacity style={styles.editButton} onPress={() => handleEditProduct(index)}>
+                                        <Text style={styles.editButtonText}>Editar informações</Text>
+                                    </TouchableOpacity>
+
+                                </View>
+                                <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteProduct(index)}>
+                                    <Image
+                                        style={styles.deleteButtonIcon}
+                                        source={require("../assets/icone_removerProduct.png")}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        ))}
+                        {products.length === 0 && (
+                            <View style={styles.noProductsContainer}>
+                                <Text style={styles.noProductsText}>Não há produtos ainda...</Text>
+                            </View>
+                        )}
+                    </ScrollView>
                     <ProductModal
                         visible={modalVisible}
                         onClose={() => setModalVisible(false)}
                         onAdd={handleAddProduct}
+                        editProduct={editProduct}
+                        onEdit={(index, name, value, quantity) => handleEditSubmit(index, name, value, quantity)}
                     />
                 </View>
             </TouchableWithoutFeedback>
@@ -100,11 +150,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#000', // Cor da sombra (preto)
-        shadowOffset: { width: 0, height: 2 }, // Deslocamento da sombra
-        shadowOpacity: 0.25, // Opacidade da sombra
-        shadowRadius: 3.84, // Raio de desfoque da sombra
-        elevation: 10, // Sombra no Android (elevação)
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 10,
     },
     buttonText: {
         color: "#3D4751",
@@ -113,7 +163,8 @@ const styles = StyleSheet.create({
     },
     returnButton: {
         width: '85%',
-        marginTop: 30,
+        marginTop: 20,
+        marginBottom: 20,
         backgroundColor: '#F2F6DF',
         borderRadius: 10,
         padding: 10,
@@ -121,12 +172,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        shadowColor: '#000', // Cor da sombra (preto)
-        shadowOffset: { width: 0, height: 2 }, // Deslocamento da sombra
-        shadowOpacity: 0.25, // Opacidade da sombra
-        shadowRadius: 3.84, // Raio de desfoque da sombra
-        elevation: 10, // Sombra no Android (elevação)
-
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 10,
     },
     returnButtonText: {
         color: '#3D4751',
@@ -138,7 +188,56 @@ const styles = StyleSheet.create({
         width: 43,
         height: 40
     },
+    productContainer: {
+        marginTop: 15,
+        marginBottom: 10,
+        backgroundColor: '#F2F6DF',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginLeft: 20,
+        marginRight: 20,
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        borderRadius: 10,
+    },
+
+    productName: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    productPrice: {
+        fontSize: 18,
+        color: '#333',
+    },
+    quantityText: {
+        fontSize: 18,
+        color: '#666',
+
+    },
+    editButton: {
+        backgroundColor: '#5DF4A5',
+        padding: 5,
+        borderRadius: 5,
+        marginTop: 5,
+        alignItems: 'center',
+    },
+    editButtonText: {
+        color: '#3D4751',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    deleteButton: {
+        padding: 10,
+    },
+    deleteButtonIcon: {
+        width: 35,
+        height: 35,
+    },
     noProductsContainer: {
+        marginTop: 180,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
