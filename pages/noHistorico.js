@@ -11,7 +11,7 @@ export default function noHistorico() {
 
     const deleteList = async (index) => {
         try {
-            const updatedLists = [...savedLists];
+            const updatedLists = [...historyLists];
             const deletedList = updatedLists.splice(index, 1)[0];
             
             // Adicionando a lista excluída ao histórico
@@ -35,9 +35,17 @@ export default function noHistorico() {
     useEffect(() => {
         const getHistoryLists = async () => {
             try {
-                const history = await AsyncStorage.getItem('historyLists');
+                let history = await AsyncStorage.getItem('historyLists');
                 if (history) {
-                    setHistoryLists(JSON.parse(history));
+                    // Se o histórico tiver mais de 5 listas, mantenha apenas as últimas 5
+                    const parsedHistory = JSON.parse(history);
+                    if (parsedHistory.length > 5) {
+                        history = JSON.stringify(parsedHistory.slice(-5));
+                        await AsyncStorage.setItem('historyLists', history);
+                    }
+                    setHistoryLists(parsedHistory);
+                } else {
+                    setHistoryLists([]);
                 }
             } catch (error) {
                 console.error('Erro ao recuperar histórico:', error);
@@ -94,8 +102,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
     },
     containerHeader: {
-        marginTop: 40,
-        marginBottom: 20,
+        marginTop: '4%',
+        marginBottom: '8%',
         alignItems: 'center',
         flexDirection: 'row',
         paddingHorizontal: 20,
@@ -104,11 +112,9 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
         color: '#3D4751',
-        marginLeft: 20,
     },
     imageVoltar: {
-        width: 24,
-        height: 24,
+        marginRight: 12,
     },
     content: {
         flexGrow: 1,
@@ -140,7 +146,7 @@ const styles = StyleSheet.create({
         width: 32, // Aumentado o tamanho dos ícones
         height: 32, // Aumentado o tamanho dos ícones
         marginRight: 10, // Espaçamento entre os ícones e o texto
-        marginTop: -55,
+        marginTop: -40,
     },
     iconLarge: {
         width: 35, // Tamanho maior

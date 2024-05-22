@@ -70,7 +70,7 @@ export default function EditarLista() {
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Lista de Compras:</Text>
                         <TextInput
-                            style={[styles.input, { height: 450 }]}
+                            style={[styles.input, { height: 450, textAlignVertical: 'top' }]}
                             placeholder="Digite sua lista de compras..."
                             multiline
                             value={listaCompras}

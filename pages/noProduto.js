@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, ScrollView, Alert } from 'react-native';
 import ProductModal from '../components/modal';
 import { useNavigation } from '@react-navigation/native';
 
@@ -55,10 +55,31 @@ export default function NoProduto() {
                             />
                         </TouchableOpacity>
                         <Text style={styles.message}>Produtos</Text>
+
+                        <TouchableOpacity onPress={() => {
+                            Alert.alert(
+                                'Excluir Todos os Produtos',
+                                'Tem certeza de que deseja excluir todos os produtos?',
+                                [
+                                    {
+                                        text: 'Cancelar',
+                                        onPress: () => console.log('Botão de cancelar foi pressionado'),
+                                        style: 'cancel',
+                                    },
+                                    {
+                                        text: 'Sim',
+                                        onPress: () => setProducts([]),
+                                    },
+                                ],
+                                { cancelable : false }
+                            );
+                        }}>
+                            <Text style={styles.excluirTudo}>Excluir Tudo</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.containerForm}>
                         <View style={styles.button}>
-                            <Text style={styles.buttonText}>
+                            <Text style={[styles.buttonText, styles.totalText]}>
                                 TOTAL: R${calculateTotal().toFixed(2)}
                             </Text>
                         </View>
@@ -134,7 +155,7 @@ const styles = StyleSheet.create({
         color: "#3D4751"
     },
     imageVoltar: {
-        marginRight: 15,
+        marginRight: 12,
     },
     containerForm: {
         backgroundColor: "#FFF",
@@ -159,7 +180,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: "#3D4751",
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     returnButton: {
         width: '85%',
@@ -247,4 +268,14 @@ const styles = StyleSheet.create({
         color: '#3D4751',
         fontWeight: 'bold'
     },
+    excluirTudo: {
+        marginLeft: 145,
+        backgroundColor: '#5DF4A5',
+        padding: 5,
+        borderRadius: 8,
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+    
+    
 });

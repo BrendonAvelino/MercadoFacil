@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   titulo: {
     position: 'relative',
     top: -180, // Movendo para cima
-    left: 100,
+    left: 98,
     zIndex: 2,
     display: 'flex',
     justifyContent: 'center',

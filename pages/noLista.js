@@ -36,19 +36,23 @@ export default function NoLista() {
         try {
             const updatedLists = [...savedLists];
             const deletedList = updatedLists.splice(index, 1)[0];
-            
-            // Adicionando a lista excluída ao histórico
             const historyLists = await AsyncStorage.getItem('historyLists');
             const parsedHistoryLists = historyLists ? JSON.parse(historyLists) : [];
-            parsedHistoryLists.push(deletedList);
+            parsedHistoryLists.unshift(deletedList); // Adiciona a lista excluída no início do histórico
+            
+            // Verificar e remover listas antigas se o histórico ultrapassar 5
+            if (parsedHistoryLists.length > 5) {
+                parsedHistoryLists.pop(); // Remove a lista mais antiga do histórico
+            }
+    
             await AsyncStorage.setItem('historyLists', JSON.stringify(parsedHistoryLists));
-
             await AsyncStorage.setItem('savedLists', JSON.stringify(updatedLists));
             setSavedLists(updatedLists);
         } catch (error) {
             console.error('Erro ao excluir lista:', error);
         }
     };
+    
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -121,7 +125,7 @@ const styles = StyleSheet.create({
         color: "#3D4751"
     },
     imageVoltar: {
-        marginRight: 15,
+        marginRight: 12,
     },
     containerForm: {
         backgroundColor: "#FFF",
@@ -150,6 +154,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#F2F6DF',
         padding: 10,
         marginTop: 20,
+        marginLeft: 20,
+        marginRight: 20,
         marginBottom: 10,
         borderRadius: 10,
     },
@@ -172,7 +178,7 @@ const styles = StyleSheet.create({
         width: 32, // Aumentado o tamanho dos ícones
         height: 32, // Aumentado o tamanho dos ícones
         marginRight: 10, // Espaçamento entre os ícones e o texto
-        marginTop: -55,
+        marginTop: -40,
     },
     iconLarge: {
         width: 35, // Tamanho maior
