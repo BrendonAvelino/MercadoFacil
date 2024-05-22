@@ -154,9 +154,10 @@ const styles = StyleSheet.create({
     },
     noHistoryText: {
         fontSize: 18,
+        fontWeight: 'bold',
         color: '#3D4751',
         textAlign: 'center',
-        marginTop: 20,
+        marginTop: 270,
     },
 });
 

@@ -266,10 +266,11 @@ const styles = StyleSheet.create({
     noProductsText: {
         fontSize: 24,
         color: '#3D4751',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop: 50,
     },
     excluirTudo: {
-        marginLeft: 145,
+        marginLeft: 130,
         backgroundColor: '#5DF4A5',
         padding: 5,
         borderRadius: 8,

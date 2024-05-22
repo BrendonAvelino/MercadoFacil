@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#5DF89A',
     borderRadius: 10,
     paddingHorizontal: 15,
-    paddingVertical: 5,
+    paddingVertical: 10,
     width: '49%', // Definindo largura fixa
   },
   button3: {
@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#004A9E',
     borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
 
   },
 
@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
   Back2: {
     position: 'relative',
     width: '100%',
+    height: 360,
     zIndex: 1,
   },
   containerBack2: {
@@ -182,14 +183,14 @@ const styles = StyleSheet.create({
     position: 'relative',
     zIndex: 2,
     width: '100%',
-    paddingTop: 190,
-    top: -120,
+    paddingTop: 180,
+    top: -155,
     left: 0,
   },
   titulo: {
     position: 'relative',
-    top: -180, // Movendo para cima
-    left: 98,
+    top: -185, // Movendo para cima
+    left: 90,
     zIndex: 2,
     display: 'flex',
     justifyContent: 'center',

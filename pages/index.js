@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     },
     back: {
         width: '100%',
-        height: 250
+        height: '100%',
     },
     button: {
         position: 'absolute',

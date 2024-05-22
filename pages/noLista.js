@@ -58,7 +58,7 @@ export default function NoLista() {
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
-                    <Animatable.View animation="fadeInLeft" delay={100} style={styles.containerHeader}>
+                    <View style={styles.containerHeader}>
                         <TouchableOpacity onPress={() => navigation.navigate('bemVindo')}>
                             <Image
                                 source={require("../assets/icone_voltar.png")}
@@ -66,7 +66,7 @@ export default function NoLista() {
                             />
                         </TouchableOpacity>
                         <Text style={styles.message}>Lista de Compras</Text>
-                    </Animatable.View>
+                    </View>
                     <View style={styles.containerForm}>
                         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('criarLista')}>
                             <Text style={styles.buttonText}>CRIAR LISTA</Text>
