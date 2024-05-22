@@ -19,14 +19,14 @@ export default function Acesso() {
         </View>
         <Animatable.Text
           style={styles.titulo}
-          delay={400}
+          delay={100}
           animation="flipInY"
         >
           Bem-Vindo!
         </Animatable.Text>
         <View style={styles.containerLogo}>
           <Animatable.Image
-            delay={300}
+            delay={100}
             animation="flipInY"
             source={require("../assets/logo_mercado_semtexto.png")}
             style={styles.logo}
@@ -37,7 +37,7 @@ export default function Acesso() {
 
         <View style={styles.buttonsDeBaixo}>
           <Animatable.View style={styles.buttonContainer}
-            delay={300}
+            delay={100}
             animation="flipInY">
 
 
@@ -75,7 +75,7 @@ export default function Acesso() {
 
 
           <Animatable.View
-            delay={300}
+            delay={100}
             animation="flipInY">
             <TouchableOpacity
 
@@ -184,12 +184,12 @@ const styles = StyleSheet.create({
     zIndex: 2,
     width: '100%',
     paddingTop: 180,
-    top: -155,
+    top: -175,
     left: 0,
   },
   titulo: {
     position: 'relative',
-    top: -185, // Movendo para cima
+    top: -200, // Movendo para cima
     left: 90,
     zIndex: 2,
     display: 'flex',
