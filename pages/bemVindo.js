@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   Back2: {
     position: 'relative',
     width: '100%',
-    height: 360,
+    height: 400,
     zIndex: 1,
   },
   containerBack2: {

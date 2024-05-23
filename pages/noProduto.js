@@ -1,14 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, ScrollView, Alert } from 'react-native';
 import ProductModal from '../components/modal';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function NoProduto() {
     const [modalVisible, setModalVisible] = useState(false);
     const [products, setProducts] = useState([]);
     const [editProduct, setEditProduct] = useState(null);
-
     const navigation = useNavigation();
+
+    useEffect(() => {
+        loadProducts();
+    }, []);
+
+    const loadProducts = async () => {
+        try {
+            const savedProducts = await AsyncStorage.getItem('products');
+            if (savedProducts !== null) {
+                setProducts(JSON.parse(savedProducts));
+            }
+        } catch (error) {
+            console.error('Erro ao carregar produtos:', error);
+        }
+    };
+
+    const saveProducts = async (products) => {
+        try {
+            await AsyncStorage.setItem('products', JSON.stringify(products));
+        } catch (error) {
+            console.error('Erro ao salvar produtos:', error);
+        }
+    };
 
     const handleAddProduct = (productName, productValue, quantity) => {
         const newProduct = {
@@ -16,7 +39,9 @@ export default function NoProduto() {
             value: parseFloat(productValue),
             quantity: parseInt(quantity),
         };
-        setProducts([...products, newProduct]);
+        const updatedProducts = [...products, newProduct];
+        setProducts(updatedProducts);
+        saveProducts(updatedProducts);
         setModalVisible(false);
     };
 
@@ -24,6 +49,7 @@ export default function NoProduto() {
         const updatedProducts = [...products];
         updatedProducts.splice(index, 1);
         setProducts(updatedProducts);
+        saveProducts(updatedProducts);
     };
 
     const handleEditProduct = (index) => {
@@ -36,6 +62,7 @@ export default function NoProduto() {
         const updatedProducts = [...products];
         updatedProducts[index] = { name, value: parseFloat(value), quantity: parseInt(quantity) };
         setProducts(updatedProducts);
+        saveProducts(updatedProducts);
         setEditProduct(null);
     };
 
@@ -277,6 +304,4 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
     },
-    
-    
 });
