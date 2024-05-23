@@ -46,7 +46,7 @@ export default function Acesso() {
               onPress={() => navigation.navigate('noProduto')}>
               <Image
                 source={require("../assets/icone_produtos.png")}
-                style={styles.buttonIcon}
+                style={[styles.buttonIcon, styles.produtoIcon]}
               />
               <Text style={styles.buttonText}
               >
@@ -62,7 +62,7 @@ export default function Acesso() {
               onPress={() => navigation.navigate('noLista')}>
               <Image
                 source={require("../assets/icone_lista.png")}
-                style={styles.buttonIcon}
+                style={[styles.buttonIcon, styles.listaIcon]}
               />
               <Text style={[styles.buttonText, styles.buttonTextLineBreak]}
               >
@@ -117,8 +117,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#5DF89A',
     borderRadius: 10,
-    paddingHorizontal: 15,
-    paddingVertical: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 18,
     width: '49%', // Definindo largura fixa
   },
   button2: {
@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#5DF89A',
     borderRadius: 10,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 18,
     width: '49%', // Definindo largura fixa
   },
   button3: {
@@ -135,9 +135,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#004A9E',
     borderRadius: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 18,
 
+  },
+
+  produtoIcon: {
+    width: 37,
+    height: 42,
+  },
+
+  listaIcon: {
+    width: 35,
+    height: 42,
   },
 
   buttonIcon: {
@@ -183,14 +193,14 @@ const styles = StyleSheet.create({
     position: 'relative',
     zIndex: 2,
     width: '100%',
-    paddingTop: 180,
-    top: -175,
+    paddingTop: 10,
+    top: -165,
     left: 0,
   },
   titulo: {
     position: 'relative',
-    top: -200, // Movendo para cima
-    left: 90,
+    top: -210, // Movendo para cima
+    left: 100,
     zIndex: 2,
     display: 'flex',
     justifyContent: 'center',

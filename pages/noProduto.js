@@ -281,8 +281,8 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     deleteButtonIcon: {
-        width: 35,
-        height: 35,
+        width: 43,
+        height: 40,
     },
     noProductsContainer: {
         marginTop: 180,
@@ -297,11 +297,12 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     excluirTudo: {
-        marginLeft: 130,
+        marginLeft: 146,
         backgroundColor: '#5DF4A5',
         padding: 5,
         borderRadius: 8,
         fontSize: 15,
         fontWeight: 'bold',
+        color: '#3D4751',
     },
 });

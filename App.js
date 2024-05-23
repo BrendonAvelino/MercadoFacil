@@ -26,7 +26,7 @@ export default function App() {
   }, []);
   return (
     <NavigationContainer>
-      <StatusBar style="auto" />
+      <StatusBar style="default" />
       <Routes />
     </NavigationContainer>
   )

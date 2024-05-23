@@ -4,10 +4,10 @@
     "slug": "mercadofacil",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo_mercado_semtexto.png",
+    "icon": "./assets/logo_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/logo_mercado_semtexto.png",
+      "image": "./assets/logo_icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,13 +20,13 @@
     "android": {
       "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo_mercado_semtexto.png",
+        "foregroundImage": "./assets/logo_icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.brendonavelino.mercadofacil"
     },
     "web": {
-      "favicon": "./assets/logo_mercado_semtexto.png"
+      "favicon": "./assets/logo_icon.png"
     },
     "plugins": [
       "expo-font"

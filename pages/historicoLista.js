@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     imageVoltar: {
-        width: 24,
-        height: 24
+        width: 20,
+        height: 20
     },
     button: {
         backgroundColor: '#BEA76D',
