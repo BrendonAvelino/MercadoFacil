@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     excluirTudo: {
-        marginLeft: 146,
+        marginLeft: 130,
         backgroundColor: '#5DF4A5',
         padding: 5,
         borderRadius: 8,

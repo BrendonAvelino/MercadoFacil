@@ -71,7 +71,7 @@ export default function noHistorico() {
             </View>
             <ScrollView contentContainerStyle={styles.content}>
                 {historyLists.length === 0 ? (
-                    <Text style={styles.noHistoryText}>Seu histórico está vazio</Text>
+                    <Text style={styles.noHistoryText}>Seu histórico está vazio...</Text>
                 ) : (
                     historyLists.map((list, index) => (
                         <View key={index} style={styles.listBox}>
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         height: 35, // Tamanho maior
     },
     noHistoryText: {
-        fontSize: 18,
+        fontSize: 24,
         fontWeight: 'bold',
         color: '#3D4751',
         textAlign: 'center',

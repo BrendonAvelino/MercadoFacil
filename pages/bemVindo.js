@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: -15,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -117,8 +118,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#5DF89A',
     borderRadius: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 18,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
     width: '49%', // Definindo largura fixa
   },
   button2: {
@@ -126,8 +127,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#5DF89A',
     borderRadius: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 18,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
     width: '49%', // Definindo largura fixa
   },
   button3: {
@@ -135,8 +136,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#004A9E',
     borderRadius: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 18,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
 
   },
 
@@ -194,13 +195,13 @@ const styles = StyleSheet.create({
     zIndex: 2,
     width: '100%',
     paddingTop: 10,
-    top: -165,
+    top: -175,
     left: 0,
   },
   titulo: {
     position: 'relative',
-    top: -210, // Movendo para cima
-    left: 100,
+    top: -230, // Movendo para cima
+    left: 90,
     zIndex: 2,
     display: 'flex',
     justifyContent: 'center',
