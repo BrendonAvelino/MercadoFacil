@@ -95,7 +95,16 @@ export default function NoProduto() {
                                     },
                                     {
                                         text: 'Sim',
-                                        onPress: () => setProducts([]),
+                                        onPress: async () => {
+                                            // Limpa os produtos da state
+                                            setProducts([]);
+                                            // Limpa os produtos do AsyncStorage
+                                            try {
+                                                await AsyncStorage.removeItem('products');
+                                            } catch (error) {
+                                                console.error('Erro ao excluir produtos do AsyncStorage:', error);
+                                            }
+                                        },
                                     },
                                 ],
                                 { cancelable : false }

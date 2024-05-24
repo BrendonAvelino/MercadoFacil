@@ -59,6 +59,7 @@ export default function historicoLista() {
                             placeholder="Digite o título da lista"
                             value={tituloLista}
                             onChangeText={setTituloLista}
+                            editable={false}
                         />
                     </View>
                     <View style={styles.inputContainer}>
@@ -69,6 +70,7 @@ export default function historicoLista() {
                             multiline
                             value={listaCompras}
                             onChangeText={setListaCompras}
+                            editable={false}
                         />
                     </View>
                 </View>
