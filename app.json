@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "MercadoFacil",
+    "slug": "mercadofacil",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo_icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/logo_icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo_icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.brendonavelino.mercadofacil"
+    },
+    "web": {
+      "favicon": "./assets/logo_icon.png"
+    },
+    "plugins": [
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "93c3a8d9-730d-4ea5-9bf5-a04b9894e832"
+      }
+    }
+  }
+}
